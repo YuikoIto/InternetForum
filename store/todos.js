@@ -1,12 +1,11 @@
 //firebaseの初期化の部分のインストール
-import firebase from '~/plugins/firebase'
+import firebase from '../plugins/firebase'
 //firestoreのアクション部分のパッケージ？をインストールする
 import { firestoreAction } from 'vuexfire'
 
 //firebaseのDBを定義する
-
 const db = firebase.firestore()
-const todosRef = db.collection('todo')
+const todosRef = db.collection('todos')
 
 //ここでstateを定義する。今回使うdbであるtodoを配列で格納する
 export const state = () => ({
@@ -19,7 +18,7 @@ export const actions = {
   init: firestoreAction(({ bindFirestoreRef }) => {
     bindFirestoreRef('todos', todosRef)
   }),
-  add: firestoreAction((content, name) => {
+  add: firestoreAction((context, name) => {
     //ここでnameが空白でないことを確認している。
     if (name.trim()) {
       todosRef.add({
@@ -30,11 +29,11 @@ export const actions = {
       })
     }
   }),
-  remove: firestoreAction((content, id) => {
+  remove: firestoreAction((context, id) => {
     todosRef.doc(id).delete()
   }),
   //checkboxの操作時の処理
-  toggle: firestoreAction((content, todo) => {
+  toggle: firestoreAction((context, todo) => {
     todosRef.doc(todo.id).update({
       done: !todo.done
     })
