@@ -1,4 +1,5 @@
 # firestore を使ってみただけのアプリ
+[![Image from Gyazo](https://i.gyazo.com/73d8e5f6bc04cd181a8fe66a4769a729.gif)](https://gyazo.com/73d8e5f6bc04cd181a8fe66a4769a729)
 
 ## Build Setup
 
