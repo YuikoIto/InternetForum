@@ -5,43 +5,37 @@ import { firestoreAction } from 'vuexfire'
 
 //firebaseのDBを定義する
 const db = firebase.firestore()
-const todosRef = db.collection('todos')
+const commentsRef = db.collection('comments')
 
 //ここでstateを定義する。今回使うdbであるtodoを配列で格納する
 export const state = () => ({
-  todos: []
+  comments: []
 })
 
 export const actions = {
   //initは初期化
   //ここでどのデータをバインド（=関連付けするか）を書く
   init: firestoreAction(({ bindFirestoreRef }) => {
-    bindFirestoreRef('todos', todosRef)
+    bindFirestoreRef('comments', commentsRef)
   }),
-  add: firestoreAction((context, name) => {
-    //ここでnameが空白でないことを確認している。
-    if (name.trim()) {
-      todosRef.add({
+  add: firestoreAction((context, {index, name}) => {
+    //ここでindexが空白でないことを確認している。
+    if (index.trim()) {
+      commentsRef.add({
         name: name,
-        done: false,
+        index: index,
         //ここでサーバーから時刻を取得する。ローカルからだとユーザーが時刻を変更できてしまうので、サーバーから取得する
         created: firebase.firestore.FieldValue.serverTimestamp()
       })
     }
   }),
   remove: firestoreAction((context, id) => {
-    todosRef.doc(id).delete()
-  }),
-  //checkboxの操作時の処理
-  toggle: firestoreAction((context, todo) => {
-    todosRef.doc(todo.id).update({
-      done: !todo.done
-    })
+    commentsRef.doc(id).delete()
   })
 }
 
 export const getters = {
-  orderdTodos: state => {
-    return _.sortBy(state.todos, 'created')
+  orderdComments: state => {
+    return _.sortBy(state.comments, 'created')
   }
 }

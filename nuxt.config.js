@@ -36,6 +36,9 @@ export default {
   modules: [
     '@nuxtjs/dotenv'
   ],
+  devModules: [
+    '@nuxtjs/tailwindcss'
+  ],
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
